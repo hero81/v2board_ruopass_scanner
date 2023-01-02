@@ -48,7 +48,7 @@ for i in emails:
                     overtime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
                 sub_plan = resp1.json()["data"]["plan"]["name"]
                 sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')
-                with open('机场result_OK.txt', 'a') as f1:
+                with open('机场result_OK.txt', 'a', encoding='UTF-8') as f1:
                     result = '账号：' + i + '密码：' + '12345678' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + overtime + '\n' + '订阅链接：' + sub_link + '\n\n'
                     print(result)
                     f1.write(result)

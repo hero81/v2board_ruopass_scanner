@@ -57,7 +57,7 @@ for i in emails:
                 continue
         else:
             continue
-    except Exception as e:
+    except LookupError as e:
         print('======无有效订阅，切换下一位用户======')
 
 with open('机场result_OK.txt', 'a', encoding='UTF-8') as f1:

@@ -30,7 +30,7 @@ for i in emails:
             header = {'Authorization': auth_data}
             # print(resp.text)
             resp1 = requests.get(url=subinfo_link, headers=header, proxies=proxies, timeout=20)
-            print(resp1.text)
+            # print(resp1.text)
             j = resp1.json()["data"]["plan_id"]
             if j != 'None':  # 根据机场套餐id调整
             # if j != 'None' and str(j) != '7':  # 根据机场套餐id调整,当前机场套餐id为1的是体验套餐

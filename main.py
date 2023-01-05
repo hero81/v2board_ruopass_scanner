@@ -24,6 +24,7 @@ for i in emails:
                  }
     try:
         resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)
+        # time.sleep(2)
         # print(resp.status_code)
         if resp.status_code == 200:
             auth_data = resp.json()['data']['auth_data']

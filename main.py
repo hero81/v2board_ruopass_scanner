@@ -23,7 +23,7 @@ for i in emails:
                  'password': '12345678',
                  }
     try:
-        resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)
+        resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # verify=False
         # time.sleep(2)
         # print(resp.status_code)
         if resp.status_code == 200:

@@ -59,7 +59,8 @@ for i in emails:
         else:
             continue
     except LookupError as e:
-        print('======无有效订阅，切换下一位用户======')
+        print('======无有效订阅，1s后切换下一位用户======')
+        time.sleep(1)
 
 with open('机场result_OK.txt', 'a', encoding='UTF-8') as f1:
     for result1 in result:

@@ -12,9 +12,9 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/108.0.0.0 '
                   'Safari/537.36'}
 
-domain = 'https://dddd.pics/'
+domain = 'https://xn--4gq62f52gdss.com/'
 login_url = domain + 'api/v1/passport/auth/login'
-subinfo_link = domain + 'api/v1/user/getSubscribe'
+userinfo_link = domain + 'api/v1/user/getSubscribe'
 
 result = []
 emails = open('机场users.txt')
@@ -23,18 +23,17 @@ for i in emails:
                  'password': '12345678',
                  }
     try:
-        resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20) # 若存在SSL问题，使用verify=False
-        # time.sleep(2)
-        # print(resp.status_code)
+        s = requests.Session()
+        resp = s.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False
+        print('页面响应码:', resp.status_code)
         if resp.status_code == 200:
-            auth_data = resp.json()['data']['auth_data']
-            header = {'Authorization': auth_data}
-            # print(resp.text)
-            resp1 = requests.get(url=subinfo_link, headers=header, proxies=proxies, timeout=20)
-            # print(resp1.text)
+            # auth_data = resp.json()['data']['auth_data'] # 获取并传递Authorization，目前使用session管理会话
+            # header = {'Authorization': auth_data}
+            resp1 = s.get(url=userinfo_link, headers=headers, proxies=proxies, timeout=20)
+            print(resp1.text)
             j = resp1.json()["data"]["plan_id"]
             if j != 'None':  # 根据机场套餐id调整
-            # if j != 'None' and str(j) != '7':  # 根据机场套餐id调整,当前机场套餐id为1的是体验套餐
+            # if j != 'None' and str(j) != '1':  # 根据机场套餐id调整,当前机场套餐id为1的是体验套餐
                 sub_link = resp1.json()["data"]["subscribe_url"]
                 traffic_download = resp1.json()["data"]["d"]
                 traffic_total = resp1.json()["data"]["transfer_enable"]
@@ -58,6 +57,7 @@ for i in emails:
                 continue
         else:
             continue
+        resp1.close()
     except LookupError as e:
         print('======无有效订阅，1s后切换下一位用户======')
         time.sleep(1)

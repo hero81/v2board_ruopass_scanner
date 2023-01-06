@@ -26,7 +26,7 @@ for i in emails:
         resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies,timeout=20)  # 若存在SSL问题，使用verify=False
         print('页面响应码:', resp.status_code)
         if resp.status_code == 200:
-            auth_data = resp.json()['data']['auth_data'] # 适用于 >= 1.7.1版本
+            auth_data = resp.json()['data']['auth_data'] # 适用于>=1.7.1版本
             header = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) '
                               'Chrome/108.0.0.0 '

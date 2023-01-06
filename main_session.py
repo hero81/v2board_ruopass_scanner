@@ -27,8 +27,6 @@ for i in emails:
         resp = s.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False
         print('页面响应码:', resp.status_code)
         if resp.status_code == 200:
-            # auth_data = resp.json()['data']['auth_data'] # 获取并传递Authorization，目前使用session管理会话
-            # header = {'Authorization': auth_data}
             resp1 = s.get(url=userinfo_link, headers=headers, proxies=proxies, timeout=20)
             print(resp1.text)
             j = resp1.json()["data"]["plan_id"]

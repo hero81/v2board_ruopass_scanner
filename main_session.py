@@ -23,7 +23,7 @@ for i in emails:
                  'password': '12345678',
                  }
     try:
-        s = requests.Session() # 适用于<= 1.7.1版本
+        s = requests.Session() # 适用于<1.7.1版本
         resp = s.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False
         print('页面响应码:', resp.status_code)
         if resp.status_code == 200:

@@ -38,16 +38,17 @@ for i in emails:
                 traffic_balance = str(round((traffic_total - traffic_download) / 1024 / 1024 / 1024, 2))
                 expired_at = resp1.json()["data"]["expired_at"]
                 if str(expired_at) == 'None':
-                    overtime = '未知'
-                elif resp1.json()["data"]["expired_at"] <= int(time.time()):
-                    continue
+                    expired_at = '未知'
+                elif expired_at <= time.time():
+                    return  # 过期订阅直接跳过
                 else:
-                    timeStamp = resp1.json()["data"]["expired_at"]
+                    timeStamp = expired_at
                     dateArray = datetime.datetime.utcfromtimestamp(timeStamp)
-                    overtime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+                    expired_at = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+
                 sub_plan = resp1.json()["data"]["plan"]["name"]
                 sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')
-                result_temp = '账号：' + i + '密码：' + '12345678' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + overtime + '\n' + '订阅链接：' + sub_link + '\n\n'
+                result_temp = '账号：' + i + '密码：' + '12345678' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'
                 print(result_temp)
                 result.append(result_temp)
                 time.sleep(1)

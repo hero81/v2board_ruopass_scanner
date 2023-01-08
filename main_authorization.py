@@ -62,7 +62,7 @@ for i in emails:
         resp1.close()
     except RuntimeError as e:
         print('======连接超时，1s后切换下一位用户======')
-        time.sleep(2)
+        time.sleep(1)
 
 with open('机场result_OK1.txt', 'a', encoding='UTF-8') as f1:
     for result1 in result:

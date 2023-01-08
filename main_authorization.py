@@ -32,38 +32,43 @@ def get_user(email):
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) '
                               'Chrome/108.0.0.0 '
                               'Safari/537.36', 'Authorization': auth_data}
-            resp1 = requests.get(url=userinfo_link, headers=header, proxies=proxies, timeout=20)
+                        resp1 = requests.get(url=userinfo_link, headers=header, proxies=proxies, timeout=20)
             print(resp1.text)
-            j = resp1.json()["data"]["plan_id"]
-            if str(j) != 'None':  # 根据机场套餐id调整
-            # if j != 'None' and str(j) != '1' and str(j) != '8':  # 根据机场套餐id调整,当前机场套餐id为1的是体验套餐
-                sub_link = resp1.json()["data"]["subscribe_url"]
-                traffic_download = resp1.json()["data"]["d"]
-                traffic_total = resp1.json()["data"]["transfer_enable"]
-                traffic_balance = str(round((traffic_total - traffic_download) / 1024 / 1024 / 1024, 2))
-                expired_at = resp1.json()["data"]["expired_at"]
-                if str(expired_at) == 'None':
-                    expired_at = '未知'
-                elif expired_at <= time.time():
-                    return  # 过期订阅直接跳过
+            try:
+                if str(resp1.json()["message"]) == "\u8ba2\u9605\u8ba1\u5212\u4e0d\u5b58\u5728":  # 不同机场提示内容不容，根据提示修改
+                    print('无订阅计划')
+                    return
+            except:
+                j = resp1.json()["data"]["plan_id"]
+                if str(j) != 'None':  # 根据机场套餐id调整
+                # if j != 'None' and str(j) != '1' and str(j) != '1':  # 根据机场套餐id调整,当前机场套餐id为1的是体验套餐
+                    sub_link = resp1.json()["data"]["subscribe_url"]
+                    traffic_download = resp1.json()["data"]["d"]
+                    traffic_total = resp1.json()["data"]["transfer_enable"]
+                    traffic_balance = str(round((traffic_total - traffic_download) / 1024 / 1024 / 1024, 2))
+                    expired_at = resp1.json()["data"]["expired_at"]
+                    if str(expired_at) == 'None':
+                        expired_at = '未知'
+                    elif expired_at <= time.time():
+                        return  # 过期订阅直接跳过
+                    else:
+                        timeStamp = expired_at
+                        dateArray = datetime.datetime.utcfromtimestamp(timeStamp)
+                        expired_at = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+                    sub_plan = resp1.json()["data"]["plan"]["name"]
+                    sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')
+                    result_temp = '账号：' + email + '密码：' + '12345678' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'
+                    print(result_temp)
+                    result.append(result_temp)
+                    time.sleep(1)
                 else:
-                    timeStamp = expired_at
-                    dateArray = datetime.datetime.utcfromtimestamp(timeStamp)
-                    expired_at = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-                sub_plan = resp1.json()["data"]["plan"]["name"]
-                sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')
-                result_temp = '账号：' + email + '密码：' + '12345678' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'
-                print(result_temp)
-                result.append(result_temp)
-                time.sleep(1)
-            else:
-                return  # 无订阅，跳过
+                    return  # 无订阅，跳过
         else:
             pass
         resp.close()
     except RuntimeError as e:
         print('======连接超时，1s后重新尝试======')
-        time.sleep(1)
+        time.sleep(0.8)
         return get_user(email)
 
 

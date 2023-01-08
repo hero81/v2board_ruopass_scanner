@@ -2,6 +2,7 @@
 import requests
 import time
 import datetime
+# import warnings
 
 proxies = {
     'http': 'http://127.0.0.1:7890',
@@ -22,7 +23,8 @@ def get_user(email):
                  'password': '12345678',
                  }
     try:
-        resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False
+        resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False（取消第5、27行注释）
+        # warnings.filterwarnings("ignore")  # 使用verify=False时，关闭警告提醒
         print('当前账号：' + email.strip(), '  页面响应码:', resp.status_code)
         if resp.status_code == 200:
             auth_data = resp.json()['data']['auth_data']  # 获取并传递Authorization，目前使用session管理会话

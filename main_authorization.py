@@ -76,3 +76,4 @@ if __name__ == "__main__":
     with open('user_success.txt', 'a', encoding='utf-8') as f:
         for result1 in result:
             f.write(result1)
+            f1.close()

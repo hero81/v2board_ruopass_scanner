@@ -67,7 +67,7 @@ def get_user(email):
 
 if __name__ == "__main__":
     email_list = []
-    with open(r'机场users.txt', 'r', encoding='utf-8') as fp:
+    with open('机场users.txt', 'r', encoding='utf-8') as fp:
         for ff in fp:
             email_list.append(ff)
     fp.close()

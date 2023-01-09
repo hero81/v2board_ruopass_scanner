@@ -27,7 +27,7 @@ def get_user(email):
         # warnings.filterwarnings("ignore")  # 使用verify=False时，关闭警告提醒
         print('当前账号：' + email.strip(), '  页面响应码:', resp.status_code)
         if resp.status_code == 200:
-            auth_data = resp.json()['data']['auth_data']  # 获取并传递Authorization，可使用request.Session管理会话
+            auth_data = resp.json()['data']['auth_data']  # 获取并传递Authorization，低版本可使用request.Session管理会话
             header = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) '
                               'Chrome/108.0.0.0 '

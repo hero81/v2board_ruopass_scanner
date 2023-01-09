@@ -68,7 +68,7 @@ def get_user(email):
         resp.close()
     except RuntimeError as e:
         print('======连接超时，1s后重新尝试======')
-        time.sleep(0.8)
+        time.sleep(1)
         return get_user(email)
 
 

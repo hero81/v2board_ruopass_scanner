@@ -63,6 +63,8 @@ def get_user(email):
                     time.sleep(1)
                 else:
                     return  # 无订阅，跳过
+        elif resp.status_code == 419 and resp.status_code == 502:
+            return get_user(email)
         else:
             pass
         resp.close()

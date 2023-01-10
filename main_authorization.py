@@ -8,7 +8,7 @@ proxies = {
     'http': 'http://127.0.0.1:7890',
     'https': 'http://127.0.0.1:7890'
 }
-domain = 'https://paopao.dog/'
+domain = 'https://xn--4gq62f52gdss.com/'
 login_url = domain + 'api/v1/passport/auth/login'
 userinfo_link = domain + 'api/v1/user/getSubscribe'
 

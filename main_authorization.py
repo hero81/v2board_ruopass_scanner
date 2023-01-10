@@ -41,7 +41,7 @@ def get_user(email):
             except:
                 j = resp1.json()["data"]["plan_id"]
                 if str(j) != 'None':  # 根据机场套餐id调整
-                # if j != 'None' and str(j) != '1':  # 根据机场套餐id调整,当前机场套餐id为1的是体验套餐
+                # if j != 'None' or str(j) != '1':  # 根据机场套餐id调整,当前机场套餐id为1的是体验套餐
                     sub_link = resp1.json()["data"]["subscribe_url"]
                     traffic_download = resp1.json()["data"]["d"]
                     traffic_total = resp1.json()["data"]["transfer_enable"]
@@ -63,7 +63,7 @@ def get_user(email):
                     time.sleep(1)
                 else:
                     return  # 无订阅，跳过
-        elif resp.status_code == 419 and resp.status_code == 502:
+        elif resp.status_code == 419 or resp.status_code == 502:
             return get_user(email)
         else:
             pass

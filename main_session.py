@@ -17,7 +17,10 @@ login_url = domain + 'api/v1/passport/auth/login'
 userinfo_link = domain + 'api/v1/user/getSubscribe'
 
 result = []
-emails = open('机场users.txt')
+emails = []
+with open('机场users.txt', 'r', encoding='UTF-8') as fp:
+    for m in fp:
+        emails.append(m)
 for i in emails:
     post_data = {'email': i,
                  'password': '自定义一个弱口令',
@@ -40,7 +43,7 @@ for i in emails:
                 if str(expired_at) == 'None':
                     expired_at = '未知'
                 elif expired_at <= time.time():
-                    return  # 过期订阅直接跳过
+                    continue
                 else:
                     timeStamp = expired_at
                     dateArray = datetime.datetime.utcfromtimestamp(timeStamp)

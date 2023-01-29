@@ -32,7 +32,7 @@ def get_user(payload):
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) '
                               'Chrome/108.0.0.0 '
                               'Safari/537.36', 'Authorization': auth_data}
-                        resp1 = requests.get(url=userinfo_link, headers=header, proxies=proxies, timeout=20)
+            resp1 = requests.get(url=userinfo_link, headers=header, proxies=proxies, timeout=20)
             print(resp1.text)
             try:
                 if str(resp1.json()["message"]) == "\u8ba2\u9605\u8ba1\u5212\u4e0d\u5b58\u5728":  # 不同机场提示内容不容，根据提示修改

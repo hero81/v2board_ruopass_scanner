@@ -35,7 +35,7 @@ def get_user(payload):
                  'password': '自定义弱口令',
                  }
     try:
-        resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False（取消第5、27行注释）
+        resp = requests.post(url=login_url, data=post_data, headers=headers, proxies=proxies, timeout=20)  # 若存在SSL问题，使用verify=False（取消第5、39行注释）
         # warnings.filterwarnings("ignore")  # 使用verify=False时，关闭警告提醒
         print('当前账号：' + payload.strip(), '  页面响应码:', resp.status_code)
         if resp.status_code == 200:

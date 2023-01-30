@@ -68,8 +68,8 @@ def get_user(payload):
         else:
             pass
         resp.close()
-    except RuntimeError as e:
-        print('======连接超时，1s后重新尝试======')
+    except requests.exceptions.RequestException:
+        print('======代理IP异常，1s后重新尝试======')
         time.sleep(1)
         return get_user(payload)
 

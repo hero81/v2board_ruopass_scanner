@@ -11,7 +11,7 @@ proxies = {
     'http': 'http://127.0.0.1:7890',
     'https': 'http://127.0.0.1:7890',
 }
-domain = '机场登陆域名'
+domain = '【机场登陆域名】'
 login_url = domain + 'api/v1/passport/auth/login'
 userinfo_link = domain + 'api/v1/user/getSubscribe'
 
